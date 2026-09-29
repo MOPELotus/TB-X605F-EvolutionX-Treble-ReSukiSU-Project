@@ -1,0 +1,22 @@
+# Device and firmware artifacts
+/artifacts/
+/backup/
+/backups/
+/recovery-assets/stock-row/*.zip
+/recovery-assets/stock-row/*.7z
+/recovery-assets/stock-row/*.rar
+/recovery-assets/stock-row/*.xz
+/recovery-assets/stock-row/*.img
+/recovery-assets/stock-row/*.bin
+/recovery-assets/stock-row/*.mbn
+/recovery-assets/stock-row/*.elf
+
+# Android/kernel build output and local worktrees
+/out/
+/sources/
+/android-source/
+*.img
+*.img.xz
+*.raw
+*.dump
+*.log

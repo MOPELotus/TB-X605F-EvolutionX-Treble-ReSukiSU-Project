@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+  <remote name="dozeoff" fetch="https://github.com/Doze-off" />
+  <remote name="trebledroid" fetch="https://github.com/TrebleDroid" />
+  <remote name="android" fetch="https://android.googlesource.com" />
+  <remote name="evolution-github" fetch="https://github.com/Evolution-X" />
+
+  <!-- The Doze-off manifest still points this project at its former Codeberg host. -->
+  <remove-project name="vendor_gms" />
+  <project name="vendor_gms"
+           path="vendor/gms"
+           remote="evolution-github"
+           revision="89c3940a77298c204c55a21efded92ddafb59fe9" />
+
+  <!-- EvoX GSI product and the overlay module it inherits. -->
+  <project name="device_phh_treble-doze"
+           path="device/phh/treble"
+           remote="dozeoff"
+           revision="6a740bfe0ecd6b23de598f64bbd00b66c3bef29c" />
+  <project name="vendor_hardware_overlay"
+           path="vendor/hardware_overlay"
+           remote="dozeoff"
+           revision="7d6d1bde72ccbc370a936565e6c7def45a2294ca" />
+
+  <!-- Current Treble HAL additions and the user-facing Treble settings app. -->
+  <project name="vendor_interfaces"
+           path="vendor/interfaces"
+           remote="trebledroid"
+           revision="a2271d260e226e8de5cb1e8c15a229dc90c007dd" />
+  <project name="treble_app"
+           path="treble_app"
+           remote="trebledroid"
+           revision="master" />
+
+  <!-- Legacy VNDK prebuilts required by the Android 9 vendor baseline. -->
+  <project name="platform/prebuilts/vndk/v28"
+           path="prebuilts/vndk/v28"
+           remote="android"
+           revision="1cb210981d2baf325aaab36cdd84afa40c775f00" />
+  <project name="platform/prebuilts/vndk/v29"
+           path="prebuilts/vndk/v29"
+           remote="android"
+           revision="2e659f04a7cde964415c82dd7507610769165408" />
+</manifest>

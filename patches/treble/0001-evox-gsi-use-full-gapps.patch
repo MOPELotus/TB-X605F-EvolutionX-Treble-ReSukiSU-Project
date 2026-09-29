@@ -1,0 +1,12 @@
+diff --git a/evox_gsi.mk b/evox_gsi.mk
+index 4f76b21..f255eb3 100644
+--- a/evox_gsi.mk
++++ b/evox_gsi.mk
+@@ -18,2 +18,6 @@
+ WITH_GMS := true
+-TARGET_USES_PICO_GAPPS := true
++TARGET_USES_MINI_GAPPS := false
++TARGET_USES_PICO_GAPPS := false
++
++PRODUCT_COPY_FILES += \
++    treble_app/TrebleApp.apk:system/priv-app/TrebleApp/TrebleApp.apk
