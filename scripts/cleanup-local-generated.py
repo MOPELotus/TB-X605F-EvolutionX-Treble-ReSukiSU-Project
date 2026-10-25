@@ -81,7 +81,8 @@ def planned_paths():
         ('vendor-usb-hci-systemuid-image-isolation-v1-20261003', 'vendor-usb-hci-systemuid-candidate.img'),
     ):
         paths.append(AUDIT / directory / filename)
-    return sorted(set(paths))
+    candidates = set(paths)
+    return sorted(path for path in candidates if not any(parent in candidates for parent in path.parents))
 
 
 def validate_path(path):
