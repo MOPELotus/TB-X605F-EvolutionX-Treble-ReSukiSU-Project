@@ -1,5 +1,7 @@
 param(
     [switch]$Execute,
+    [ValidateSet('All', 'C', 'E')]
+    [string]$Drive = 'All',
     [string]$LogDirectory = "$PSScriptRoot\..\..\.codex-patch-stage"
 )
 
@@ -8,6 +10,9 @@ $paths = @(
     'C:\WSL\AndroidBuild\android-build-clean.vhdx',
     'E:\WSL\Ubuntu\ext4.vhdx'
 )
+if ($Drive -ne 'All') {
+    $paths = @($paths | Where-Object { $_.StartsWith("${Drive}:\", [StringComparison]::OrdinalIgnoreCase) })
+}
 $before = foreach ($path in $paths) {
     $item = Get-Item -LiteralPath $path
     if ($item.PSIsContainer -or $item.FullName -ne $path -or ($item.Attributes -band [IO.FileAttributes]::ReparsePoint)) {

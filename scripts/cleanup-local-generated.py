@@ -67,12 +67,13 @@ def planned_paths():
             continue
         paths.extend(snapshot.glob('**/extracted-check'))
         if snapshot != FINAL:
-            paths.extend(snapshot.glob('*.img'))
-            paths.extend(snapshot.glob('six-gib-option/*.img'))
+            paths.extend(snapshot.glob('**/*.img'))
     for providers in sorted(AUDIT.glob('saved-*-providers')):
         if providers.is_dir() and not providers.is_symlink():
             for name in ('system-root', 'factory-apex'):
                 paths.append(providers / name)
+    paths.extend(AUDIT.glob('*/elf-projection'))
+    paths.extend(AUDIT.glob('factory-linkerconfig-*/fixture'))
     paths.append(AUDIT / 'system-size-adbauth-v2-20261003/EXPERIMENTAL-filesystem-minimized-no-AVB.img')
     for directory, filename in (
         ('vendor-usb-two-byte-image-20261003', 'vendor-usb-syntax-candidate.img'),
@@ -145,8 +146,9 @@ def main():
         for name in ('avbtool', 'checkvintf', 'debugfs', 'e2fsck', 'secilc', 'simg2img', 'unpack_bootimg'):
             original = BUILD / 'out/host/linux-x86/bin' / name
             retained = retained_host / 'linux-x86/bin' / name
-            if not retained.is_file() or digest(original) != digest(retained):
+            if not retained.is_file() or (original.exists() and digest(original) != digest(retained)):
                 raise RuntimeError(f'Host tool retention failed: {name}')
+            report.setdefault('retained_host_tools', {})[name] = digest(retained)
         ensure_quiet()
         for path in paths:
             validate_path(path)
