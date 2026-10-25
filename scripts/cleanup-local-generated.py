@@ -158,6 +158,9 @@ def main():
             args.report.write_text(json.dumps(report, indent=2) + '\n')
         (BUILD / 'out').mkdir(exist_ok=True)
         (BUILD / 'ccache').mkdir(exist_ok=True)
+        owner = SOURCE.stat()
+        for directory in (BUILD / 'out', BUILD / 'ccache'):
+            os.chown(directory, owner.st_uid, owner.st_gid)
         for path, expected in EXPECTED.items():
             if digest(path) != expected:
                 raise RuntimeError(f'Post-cleanup artifact mismatch: {path}')
