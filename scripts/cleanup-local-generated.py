@@ -18,6 +18,17 @@ EXPECTED = {
     AUDIT / 'vendor-usb-hci-appcompat-image-isolation-v1-20261003-v2/vendor-usb-hci-appcompat-candidate.img': '4ab3e6a3dd1c14fe77c3f0b343dedda5cb26b721a91c165dec41ca684418e02a',
     Path('/home/lotus/TB-X605F-artifacts/recovery/twrp-official-X605F/twrp-3.7.0_9-0-X605F.img'): '266873bedbbd925f083fe05997d8531342c47e79704a304f3330e55320e176f7',
 }
+CANONICAL = ARTIFACTS / 'x605f-final'
+if (CANONICAL / 'manifest.json').is_file():
+    EXPECTED = {
+        CANONICAL / 'boot.img': 'e660527cb3253e705f21a5daf97e62268b8f696a5402c3f844964900d9ade811',
+        CANONICAL / 'recovery.img': '266873bedbbd925f083fe05997d8531342c47e79704a304f3330e55320e176f7',
+        CANONICAL / 'system.img': 'f6be0e18cb1ad3196efb52609e0bfbbbd0298763f8dbf683c6df24d61feebc2b',
+        CANONICAL / 'vendor.img': '4ab3e6a3dd1c14fe77c3f0b343dedda5cb26b721a91c165dec41ca684418e02a',
+        CANONICAL / 'system-6g-option.img': '1864d5dbd63d2246311d14f23b3dc62dab796cf921b92da7880e79af0cd63e85',
+        CANONICAL / 'ReSukiSU-manager-arm64.apk': '2deccb3ac73f4ae6a41541b74312f4299bd8e9226d3bf5a1450b922a703ee9d1',
+        CANONICAL / 'ksud': '9a4344ef76b71f4fcc23359fb4d48d59076b2764bd8c3a493ff8d08d8589ca47',
+    }
 
 
 def digest(path):
@@ -127,7 +138,10 @@ def main():
         'source_git_objects_preserved': True,
         'download_caches_preserved': True,
         'missing_previous_delivery': '/mnt/e/TB-X605F-firmware-research/final-offline-candidates-20261003-isolation-v2',
-        'missing_previous_resukisu_boot': True,
+        'missing_previous_resukisu_boot': not (
+            (CANONICAL / 'boot.img').is_file()
+            or (AUDIT / 'boot-repack-consistency-20261003/repacked.img').is_file()
+        ),
     }
     for path, expected in EXPECTED.items():
         actual = digest(path)
